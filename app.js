@@ -4,7 +4,15 @@ const contactRoutes = require('./routes/contact');
 
 const app = express();
 
-app.use(cors());
+// Allow only your frontend
+app.use(cors({
+  origin: 'https://maroon-crane-431544.hostingersite.com',
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
+
+app.options('*', cors()); // Optional for preflight
+
 app.use(express.json());
 
 // Connect the contact route
@@ -12,6 +20,7 @@ app.use('/api/contact', contactRoutes);
 
 // Default test route
 app.get('/', (req, res) => {
+
   res.send('API is running...');
 });
 
